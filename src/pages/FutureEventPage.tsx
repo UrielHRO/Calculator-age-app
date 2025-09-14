@@ -3,14 +3,9 @@ import { intervalToDuration, isValid, isAfter, startOfDay } from 'date-fns';
 import DateForm from '../components/DateForm';
 
 const futureEventValidationSchema = z.object({
-  day: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" })
-          .min(1, "Dia inválido")
-          .max(31, "Dia inválido"),
-  month: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" })
-          .min(1, "Mês inválido")
-          .max(12, "Mês inválido"),
-  year: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" })
-          .min(new Date().getFullYear(), "Deve ser no futuro"),
+  day: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" }).min(1, "Dia inválido").max(31, "Dia inválido"),
+  month: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" }).min(1, "Mês inválido").max(12, "Mês inválido"),
+  year: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" }).min(new Date().getFullYear(), "Deve ser no futuro"),
 }).superRefine((data, ctx) => {
   const date = startOfDay(new Date(data.year, data.month - 1, data.day));
   const todayStart = startOfDay(new Date());

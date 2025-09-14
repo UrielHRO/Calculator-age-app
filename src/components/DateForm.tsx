@@ -1,8 +1,6 @@
-// src/components/DateForm.tsx
 import React, { useState, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 
 // Tipos
 type FormData = {
@@ -19,7 +17,13 @@ interface DateFormProps {
 }
 
 // Componente de Input interno
-const DateInput: React.FC<{ label: string; placeholder: string; name: keyof FormData; register: any; error?: string }> = ({ label, placeholder, name, register, error }) => {
+const DateInput: React.FC<{
+  label: string;
+  placeholder: string;
+  name: keyof FormData;
+  register: any;
+  error?: string;
+}> = ({ label, placeholder, name, register, error }) => {
   const labelColor = error ? 'text-red-500' : 'text-gray-500';
   const borderColor = error ? 'border-red-500' : 'border-gray-300 focus:border-purple-600';
 
