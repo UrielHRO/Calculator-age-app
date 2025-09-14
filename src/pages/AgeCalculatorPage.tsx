@@ -11,9 +11,15 @@ import {
 import DateForm from '../components/DateForm';
 
 const ageValidationSchema = z.object({
-  day: z.coerce.number({ invalid_type_error: "Obrigatório" }).min(1, "Dia inválido").max(31, "Dia inválido"),
-  month: z.coerce.number({ invalid_type_error: "Obrigatório" }).min(1, "Mês inválido").max(12, "Mês inválido"),
-  year: z.coerce.number({ invalid_type_error: "Obrigatório" }).max(new Date().getFullYear(), "Deve ser no passado").min(0,"não pode ano negativa"),
+  day: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" })
+          .min(1, "Dia inválido")
+          .max(31, "Dia inválido"),
+  month: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" })
+          .min(1, "Mês inválido")
+          .max(12, "Mês inválido"),
+  year: z.coerce.number().refine(val => !isNaN(val), { message: "Obrigatório" })
+          .max(new Date().getFullYear(), "Deve ser no passado")
+          .min(0, "Não pode ser ano negativo"),
 }).superRefine((data, ctx) => {
   const date = startOfDay(new Date(data.year, data.month - 1, data.day));
   if (!isValid(date) || date.getDate() !== data.day) {
